@@ -1,0 +1,15 @@
+{
+  "name": "camera-app",
+  "version": "1.0.0",
+  "description": "An app used to pull live camera frames from the corner of Toomers Corner and College Street in Auburn, AL",
+  "main": "video.js",
+  "dependencies": {
+    "puppeteer": "^1.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Allen Kinzalow",
+  "license": "ISC"
+}
