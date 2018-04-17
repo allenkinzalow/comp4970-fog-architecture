@@ -1,0 +1,5 @@
+./camera/node_modules
+./camera/node_modules/*
+.vscode
+camera/node_modules
+camera/node_modules/
