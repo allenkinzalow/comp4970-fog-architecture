@@ -134,6 +134,8 @@ def run_inference_on_image(image):
   # Creates graph from saved GraphDef.
   create_graph()
 
+  predictions = None
+
   with tf.Session() as sess:
     # Some useful tensors:
     # 'softmax:0': A tensor containing the normalized prediction across
@@ -151,12 +153,15 @@ def run_inference_on_image(image):
     # Creates node ID --> English string lookup.
     node_lookup = NodeLookup()
 
+    total_results = []
+
     top_k = predictions.argsort()[-FLAGS.num_top_predictions:][::-1]
     for node_id in top_k:
       human_string = node_lookup.id_to_string(node_id)
+      total_results = total_results + human_string.split(", ")
       score = predictions[node_id]
-      print('%s (score = %.5f)' % (human_string, score))
-
+      #print('%s (score = %.5f)' % (human_string, score))
+  return total_results
 
 def maybe_download_and_extract():
   """Download and extract model tar file."""
@@ -183,6 +188,43 @@ def main(_):
            os.path.join(FLAGS.model_dir, 'cropped_panda.jpg'))
   run_inference_on_image(image)
 
+def classify():
+  global FLAGS
+  parser = argparse.ArgumentParser()
+  # classify_image_graph_def.pb:
+  #   Binary representation of the GraphDef protocol buffer.
+  # imagenet_synset_to_human_label_map.txt:
+  #   Map from synset ID to a human readable string.
+  # imagenet_2012_challenge_label_map_proto.pbtxt:
+  #   Text representation of a protocol buffer mapping a label to synset ID.
+  parser.add_argument(
+      '--model_dir',
+      type=str,
+      default='/tmp/imagenet',
+      help="""\
+      Path to classify_image_graph_def.pb,
+      imagenet_synset_to_human_label_map.txt, and
+      imagenet_2012_challenge_label_map_proto.pbtxt.\
+      """
+  )
+  parser.add_argument(
+      '--image_file',
+      type=str,
+      default='./traffic.png',
+      help='Absolute path to image file.'
+  )
+  parser.add_argument(
+      '--num_top_predictions',
+      type=int,
+      default=5,
+      help='Display this many predictions.'
+  )
+  FLAGS, unparsed = parser.parse_known_args()
+  maybe_download_and_extract()
+  image = (FLAGS.image_file if FLAGS.image_file else
+           os.path.join(FLAGS.model_dir, 'cropped_panda.jpg'))
+  return run_inference_on_image(image)
+  #tf.app.run(main=main, argv=["classify_image"] + unparsed)
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
