@@ -33,8 +33,8 @@ def submit_traffic():
         status = False
         for result in results:
             for check in VALID_RESULTS:
-                check = check.split(" ")
-                if result in check:
+                check_singles = check.split(" ")
+                if result in check_singles:
                     status = True
                     print(check + ' ' + result)
                     break
