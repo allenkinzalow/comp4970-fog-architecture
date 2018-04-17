@@ -18,8 +18,8 @@ class Traffic {
             }
         };
         this.camera = this.cameras[camera ? camera : "toomer_1"];
-        this.url = "http://traffic.kinztech.com";
-        //this.url = "https://au-fog.herokuapp.com/";
+        //this.url = "http://traffic.kinztech.com";
+        this.url = "https://au-fog.herokuapp.com/";
     }
 
     sleep(ms) {
