@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 ./camera/node_modules
 ./camera/node_modules/*
 .vscode
 camera/node_modules
 camera/node_modules/
+=======
+./camera/node_modules/*
+./camera/node_modules/
+./.vscode
+.vscode
+camera/node_modules/
+camera/node_modules/*
+>>>>>>> 541f496e249dbed3ebe2b66ca65170deb5f373e4
